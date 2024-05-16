@@ -1,0 +1,50 @@
+.parametros {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ajusta la altura según sea necesario */
+  }
+  
+  input[type="range"] {
+    width: 80%; /* Ajusta el ancho del input de rango según sea necesario */
+    margin-bottom: 10px; /* Ajusta el margen inferior según sea necesario */
+  }
+  
+ 
+
+  button {
+    box-shadow:inset 0px 16px 5px 6px #02912d;
+    background-color:#003d05;
+    border-radius:42px;
+    border:6px solid #024a02;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Verdana;
+    font-size:21px;
+    padding:17px 18px;
+    text-decoration:none;
+    text-shadow:-14px -15px 19px #77ff00;
+  }
+  .button:hover {
+    background-color:#086d17;
+  }
+  .button:active {
+    position:relative;
+    top:1px;
+  }
+  .parametros-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .select-container {
+    margin-bottom: 20px;
+  }
+  
+  .parametros {
+    text-align: left;
+  }
+  

@@ -1,0 +1,122 @@
+[
+    {
+        "Nombre": "AK-47",
+        "Temperatura": "20",
+        "Luz Roja": "660",
+        "Luz Blanca": "100",
+        "Luz Tojo Lejano": "730",
+        "Luz azul": "460",
+        "Humedad": "40",
+        "Abono A": "2",
+        "Abono B": "2",
+        "Agua": "50"
+    },
+    {
+        "Nombre": "White Widow",
+        "Temperatura": "22",
+        "Luz Roja": "640",
+        "Luz Blanca": "99",
+        "Luz Tojo Lejano": "700",
+        "Luz azul": "470",
+        "Humedad": "45",
+        "Abono A": "3",
+        "Abono B": "3",
+        "Agua": "45"
+    },
+    {
+        "Nombre": "Amnesia Haze",
+        "Temperatura": "24",
+        "Luz Roja": "670",
+        "Luz Blanca": "98",
+        "Luz Tojo Lejano": "710",
+        "Luz azul": "480",
+        "Humedad": "50",
+        "Abono A": "3",
+        "Abono B": "3",
+        "Agua": "46"
+    },
+    {
+        "Nombre": "Gorilla Glue",
+        "Temperatura": "22",
+        "Luz Roja": "660",
+        "Luz Blanca": "98",
+        "Luz Tojo Lejano": "700",
+        "Luz azul": "470",
+        "Humedad": "45",
+        "Abono A": "2",
+        "Abono B": "2",
+        "Agua": "48"
+    },
+    {
+        "Nombre": "Sour Diesel",
+        "Temperatura": "25",
+        "Luz Roja": "680",
+        "Luz Blanca": "98",
+        "Luz Tojo Lejano": "720",
+        "Luz azul": "490",
+        "Humedad": "55",
+        "Abono A": "3",
+        "Abono B": "3",
+        "Agua": "45"
+    },
+    {
+        "Nombre": "OG Kush",
+        "Temperatura": "23",
+        "Luz Roja": "650",
+        "Luz Blanca": "99",
+        "Luz Tojo Lejano": "710",
+        "Luz azul": "480",
+        "Humedad": "50",
+        "Abono A": "2",
+        "Abono B": "2",
+        "Agua": "34"
+    },
+    {
+        "Nombre": "Northern Lights",
+        "Temperatura": "20",
+        "Luz Roja": "640",
+        "Luz Blanca": "99",
+        "Luz Tojo Lejano": "700",
+        "Luz azul": "470",
+        "Humedad": "45",
+        "Abono A": "2",
+        "Abono B": "2",
+        "Agua": "42"
+    },
+    {
+        "Nombre": "Blue Dream",
+        "Temperatura": "24",
+        "Luz Roja": "670",
+        "Luz Blanca": "99",
+        "Luz Tojo Lejano": "710",
+        "Luz azul": "480",
+        "Humedad": "50",
+        "Abono A": "3",
+        "Abono B": "3",
+        "Agua": "49"
+    },
+    {
+        "Nombre": "Cannatonic",
+        "Temperatura": "22",
+        "Luz Roja": "660",
+        "Luz Blanca": "98",
+        "Luz Tojo Lejano": "700",
+        "Luz azul": "470",
+        "Humedad": "45",
+        "Abono A": "2",
+        "Abono B": "2",
+        "Agua": "41"
+    },
+    {
+        "Nombre": "Jack Herer",
+        "Temperatura": "25",
+        "Luz Roja": "680",
+        "Luz Blanca": "100",
+        "Luz Tojo Lejano": "720",
+        "Luz azul": "490",
+        "Humedad": "55",
+        "Abono A": "3",
+        "Abono B": "3",
+        "Agua": "40"
+    }
+]

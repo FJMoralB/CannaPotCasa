@@ -1,0 +1,16 @@
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Esto centra verticalmente el contenido */
+  }
+  
+  .Estado {
+    text-align: center;
+  }
+  
+  .imagen {
+    max-width: 100%; /* Para que la imagen no exceda el ancho del contenedor */
+    height: auto; /* Para mantener la proporción de la imagen */
+  }
+  

@@ -1,0 +1,14 @@
+/* Estilos para el contenedor del gráfico */
+.graficas-container {
+    width: 100%; /* El contenedor ocupará todo el ancho disponible */
+    height: 400px; /* Altura inicial del contenedor */
+  }
+  
+  /* Estilos para hacer que el gráfico sea responsive */
+  .graficas-container > div {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Estilos adicionales si es necesario */
+  

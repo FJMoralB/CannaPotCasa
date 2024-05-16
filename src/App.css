@@ -1,0 +1,120 @@
+/* Establece estilos para todos los elementos en la página */
+* {
+  margin: 0; /* Elimina el margen exterior */
+  padding: 0; /* Elimina el relleno */
+  box-sizing: border-box; /* El ancho y la altura incluyen el relleno y el borde */
+  font-family: sans-serif; /* Utiliza una fuente genérica sin remates */
+  background-color: #0e5414; /* Color de fondo púrpura oscuro */
+  color: white; /* Color de texto blanco */
+}
+
+/* Define variables CSS */
+:root {
+  --clr-main: #0e5414; /* Color principal */
+  --clr-main-light: #efdaf9; /* Color principal claro */
+}
+
+/* Estilos para el contenedor principal */
+.container {
+  max-width: 1140px; /* Ancho máximo del contenedor */
+  padding-inline: 1.5rem; /* Relleno horizontal */
+  margin: 0 auto; /* Centra el contenedor en la página */
+}
+
+/* Estilos para el título principal */
+.main-title {
+  margin-top: 2rem; /* Margen superior */
+}
+
+/* Estilos para la barra de navegación */
+.navbar {
+  padding: 2rem; /* Relleno */
+  display: flex; /* Disposición en línea */
+  justify-content: space-between; /* Distribución equitativa de los elementos */
+  align-items: center; /* Alinea los elementos verticalmente */
+  background-color: var(--clr-main); /* Color de fondo */
+  border-bottom: 3px solid rgb(255, 250, 250); /* Borde inferior */
+}
+
+/* Contenedor interno de la barra de navegación */
+.navbar-container {
+  max-width: 100%; /* Ancho máximo */
+  padding: 0 1.5rem; /* Relleno horizontal */
+  margin: 0 auto; /* Centra el contenedor en la página */
+}
+
+/* Estilos para el logo */
+.logo {
+  text-decoration: none; /* Sin decoración de texto */
+  color: rgb(255, 255, 255); /* Color de texto blanco */
+}
+
+/* Estilos para la imagen del logo */
+.logo img {
+  width: 50px; /* Ancho de la imagen */
+  height: auto; /* Altura automática */
+}
+
+/* Estilos para el menú de navegación */
+.menu {
+  list-style-type: none; /* Sin viñetas */
+  display: flex; /* Disposición en línea */
+  align-items: center; /* Alinea los elementos verticalmente */
+  gap: 1rem; /* Espacio entre elementos */
+}
+
+/* Estilos para los enlaces del menú de navegación */
+.menu-link {
+  text-decoration: none; /* Sin decoración de texto */
+  color: rgb(255, 255, 255); /* Color de texto blanco */
+  font-size: 1.2rem; /* Tamaño de fuente */
+}
+
+/* Estilos para los enlaces del menú de navegación al pasar el cursor */
+.menu-link:hover {
+  text-decoration: underline; /* Subrayado al pasar el cursor */
+}
+
+/* Media query para dispositivos móviles */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Cambia la disposición a columna */
+    align-items: flex-start; /* Alinea los elementos a la izquierda */
+    padding: 1rem; /* Relleno reducido */
+  }
+
+  .logo {
+    margin-bottom: 1rem; /* Espacio inferior añadido */
+  }
+
+  .menu {
+    display: none; /* Oculta el menú principal */
+    flex-direction: column; /* Cambia la disposición a columna */
+    width: 100%; /* Ancho completo */
+  }
+
+  .menu.open {
+    display: flex; /* Muestra el menú desplegable abierto */
+  }
+
+  .menu-link {
+    padding: 1rem 0; /* Espacio entre elementos del menú desplegable */
+    width: 100%; /* Ancho completo de los elementos */
+  }
+
+  .menu-icon {
+    /* display: flex; Muestra el icono de menú */
+    cursor: pointer; /* Cursor personalizado */
+  }
+
+  .menu-icon-line {
+    width: 25px; /* Ancho de las líneas del icono de menú */
+    height: 2px; /* Altura de las líneas del icono de menú */
+    background-color: rgb(255, 255, 255); /* Color de las líneas */
+    margin-bottom: 5px; /* Espacio entre líneas */
+  }
+
+  .logo img {
+    width: 80px; /* Ancho de la imagen del logo para dispositivos móviles */
+  }
+}

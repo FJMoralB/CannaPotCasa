@@ -1,0 +1,190 @@
+/* Estilos para el contenedor principal del formulario de inicio de sesión */
+.login {
+    display: grid;
+    /* Utilizamos CSS Grid para organizar el contenido */
+    grid-template-columns: 1fr;
+    /* La cuadrícula tiene una columna que ocupa todo el espacio disponible */
+    gap: 20px;
+    /* Espacio entre los elementos */
+    padding: 20px;
+    /* Espaciado interno */
+    background-color: #0e5414;
+    /* Color de fondo */
+    border-radius: 10px;
+    /* Borde redondeado */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra */
+}
+
+/* Estilos para el encabezado */
+.header {
+    text-align: left;
+    /* Alineación del texto a la izquierda */
+    margin-bottom: 20px;
+    /* Margen inferior */
+}
+
+/* Estilos para el título */
+.titulo {
+    font-size: 48px;
+    /* Tamaño de fuente */
+    color: #ffffff;
+    /* Color del texto */
+    margin-bottom: 30px;
+    /* Margen inferior */
+}
+
+/* Estilos para el subtítulo */
+.nombre {
+    font-size: 24px;
+    /* Tamaño de fuente */
+    color: #ffffff;
+    /* Color del texto */
+    margin-left: 200px;
+}
+
+/* Estilos para el contenedor del contenido */
+.content {
+    display: grid;
+    /* Utilizamos CSS Grid para organizar el contenido */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Las columnas se ajustan automáticamente al tamaño del contenido, con un ancho mínimo de 300px */
+    gap: 20px;
+    /* Espacio entre los elementos */
+}
+
+/* Estilos para el contenedor de la imagen */
+.imagen {
+    text-align: center;
+    /* Alineación del texto al centro */
+}
+
+/* Estilos para la imagen */
+.imagen img {
+    width: 100%;
+    /* La imagen ocupa el ancho completo del contenedor */
+    max-width: 200px;
+    /* Ancho máximo de la imagen */
+    border-radius: 50%;
+    /* Borde redondeado para que la imagen sea circular */
+}
+
+/* Estilos para el contenedor del formulario */
+.formulario {
+    text-align: center;
+    /* Alineación del texto a la izquierda */
+    margin-bottom: 20px;
+}
+
+/* Estilos para las etiquetas del formulario */
+.formulario label {
+    display: block;
+    /* Las etiquetas son bloques */
+    font-weight: bold;
+    /* Negrita */
+    margin-bottom: 20px;
+    /* Margen inferior */
+    
+}
+
+/* Estilos para los campos de entrada del formulario */
+.formulario input {
+    width: 100%;
+    /* Los campos de entrada ocupan todo el ancho disponible */
+    padding: 10px;
+    /* Espaciado interno */
+    margin-bottom: 15px;
+    /* Margen inferior */
+    border: 1px solid #012702;
+    /* Borde */
+    border-radius: 5px;
+    /* Borde redondeado */
+    background-color: #ffffff;
+    color: #012702;
+}
+
+/* Estilos para los botones del formulario */
+.formulario button {
+    background-color: #1b8c4e;
+    /* Color de fondo */
+    color: rgb(255, 255, 255);
+    /* Color del texto */
+    border: none;
+    /* Sin borde */
+    border-radius: 42px;
+    /* Borde redondeado */
+    padding: 10px 20px;
+    /* Espaciado interno */
+    cursor: pointer;
+    /* Cursor de puntero */
+    transition: background-color 0.3s ease;
+    /* Transición suave */
+    margin-bottom: 20px;
+}
+
+/* Estilos para el botón al pasar el mouse */
+.formulario button:hover {
+    background-color: #0c6f02;
+    /* Color de fondo al pasar el mouse */
+}
+
+/* Estilos para el texto adicional */
+.formulario p {
+    margin-top: 20px;
+    /* Margen superior */
+}
+
+/* Estilos para los enlaces de texto adicional */
+.formulario p button {
+    background: none;
+    /* Fondo transparente */
+    border: none;
+    /* Sin borde */
+    color: #ffffff;
+    /* Color del texto */
+    cursor: pointer;
+    /* Cursor de puntero */
+    text-decoration: underline;
+    /* Subrayado */
+    font-size: 14px;
+    /* Tamaño de fuente */
+    transition: color 0.3s ease;
+    /* Transición suave */
+}
+
+/* Estilos para los enlaces de texto adicional al pasar el mouse */
+.formulario p button:hover {
+    color: #4cac55;
+    /* Color del texto al pasar el mouse */
+}
+.google-login img {
+    width: 26px;
+    align-content: center;
+}
+
+/* Estilos para hacer que el diseño sea responsive */
+@media screen and (max-width: 768px) {
+
+    /* Cuando el ancho de la pantalla es menor o igual a 768px */
+    .content {
+        grid-template-columns: 1fr;
+        /* Cambiamos a una sola columna */
+    }
+
+    .imagen {
+        text-align: center;
+        /* Alineamos la imagen al centro */
+    }
+
+    .imagen img {
+        width: 100%;
+        /* La imagen ocupa todo el ancho */
+        max-width: 300px;
+        /* Ancho máximo de la imagen */
+    }
+
+    .formulario {
+        text-align: center;
+        /* Alineamos el formulario al centro */
+    }
+}

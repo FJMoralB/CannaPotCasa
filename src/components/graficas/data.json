@@ -1,0 +1,16 @@
+[
+    {"time":1672531200,"peso":50,"dendrometro":60,"temperatura":25,"humedad":70},
+    {"time":1672617600,"peso":55,"dendrometro":65,"temperatura":26,"humedad":72},
+    {"time":1672704000,"peso":60,"dendrometro":70,"temperatura":27,"humedad":75},
+    {"time":1672790400,"peso":65,"dendrometro":75,"temperatura":28,"humedad":78},
+    {"time":1672876800,"peso":70,"dendrometro":80,"temperatura":29,"humedad":80},
+    {"time":1672963200,"peso":72,"dendrometro":82,"temperatura":30,"humedad":82},
+    {"time":1673049600,"peso":75,"dendrometro":85,"temperatura":31,"humedad":84},
+    {"time":1673136000,"peso":77,"dendrometro":88,"temperatura":32,"humedad":86},
+    {"time":1673222400,"peso":78,"dendrometro":90,"temperatura":33,"humedad":88},
+    {"time":1673308800,"peso":80,"dendrometro":92,"temperatura":34,"humedad":90},
+    {"time":1673395200,"peso":82,"dendrometro":94,"temperatura":35,"humedad":92},
+    {"time":1673481600,"peso":84,"dendrometro":96,"temperatura":36,"humedad":94},
+    {"time":1673568000,"peso":86,"dendrometro":98,"temperatura":37,"humedad":96},
+    {"time":1673654400,"peso":88,"dendrometro":100,"temperatura":38,"humedad":98}
+]

@@ -1,0 +1,29 @@
+.notificaciones-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .seccion {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .seccion h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .seccion ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .seccion ul li {
+    margin-bottom: 5px;
+  }
+  
+  .seccion p {
+    margin-bottom: 5px;
+  }
+  
