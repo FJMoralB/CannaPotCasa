@@ -2,12 +2,31 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin: 20px;
   }
   
   .seccion {
     border: 1px solid #ccc;
     padding: 10px;
+    max-height: 200px; /* Altura máxima para mostrar el contenido antes de que aparezca el desplazamiento */
+    overflow-y: auto; /* Habilita el desplazamiento vertical cuando el contenido excede la altura máxima */
   }
+  
+  /* Estilos personalizados para el scrollbar */
+  .seccion::-webkit-scrollbar {
+    width: 8px; /* Ancho del scrollbar */
+  }
+  
+  .seccion::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2); /* Color del scrollbar thumb */
+    border-radius: 10px; /* Radio de borde del scrollbar thumb */
+  }
+  
+  .seccion::-webkit-scrollbar-track {
+    background-color: transparent; /* Color del track del scrollbar */
+  }
+  
+  
   
   .seccion h2 {
     font-size: 1.2rem;

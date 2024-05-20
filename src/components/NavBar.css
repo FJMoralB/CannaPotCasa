@@ -1,65 +1,76 @@
 .container {
-    position: relative; /* Establece el contenedor principal con posicionamiento relativo para facilitar el posicionamiento de elementos hijos */
-  }
-  
+  position: relative; /* Establece el contenedor principal con posicionamiento relativo para facilitar el posicionamiento de elementos hijos */
+  display: flex; /* Utiliza el modelo de caja flexible para organizar los elementos hijos */
+  align-items: center; /* Alinea los elementos hijos verticalmente en el contenedor */
+}
+
+.img {
+  width: 100%;
+  /* La imagen ocupa el ancho completo del contenedor */
+  max-width: 200px;
+  /* Ancho máximo de la imagen */
+  border-radius: 50%;
+  /* Borde redondeado para que la imagen sea circular */
+  margin-right: 20px; /* Espacio entre el logo y la barra de navegación */
+}
+
+.navbar {
+  display: flex; /* Utiliza el modelo de caja flexible para organizar los elementos hijos */
+  flex-direction: column; /* Coloca los elementos hijos en una columna */
+  align-items: flex-start; /* Alinea los elementos hijos al inicio del contenedor a lo largo del eje transversal */
+}
+
+.menu {
+  list-style: none; /* Elimina los marcadores de lista predeterminados */
+  padding: 0; /* Elimina el relleno interno del ul */
+  margin: 0; /* Elimina el margen externo del ul */
+}
+
+.menu-icon {
+  cursor: pointer; /* Cambia el cursor al pasar sobre el elemento para indicar que es clicable */
+  padding: 10px; /* Añade un espacio interno alrededor del contenido */
+}
+
+.menu-link {
+  text-decoration: none; /* Elimina la decoración de texto (subrayado) de los enlaces */
+  color: #ffffff; /* Define el color del texto de los enlaces como blanco */
+  padding: 10px; /* Añade un espacio interno alrededor del texto del enlace */
+  display: block; /* Hace que cada enlace ocupe todo el ancho de su contenedor */
+}
+
+.icon-link {
+  cursor: pointer; /* Cambia el cursor al pasar sobre el elemento para indicar que es clicable */
+  padding: 10px; /* Añade un espacio interno alrededor del ícono */
+  display: flex; /* Utiliza el modelo de caja flexible para el diseño del ícono */
+  align-items: center; /* Alinea el contenido del ícono en el centro a lo largo del eje transversal */
+}
+
+.submenu {
+  list-style: none; /* Elimina los marcadores de lista predeterminados */
+  padding: 0; /* Elimina el relleno interno del ul */
+  margin: 0 0 0 20px; /* Añade un margen izquierdo de 20px para desplazar el submenú hacia la derecha */
+}
+
+.warning {
+  color: red; /* Define el color del texto del mensaje como rojo para destacar la advertencia */
+  margin-top: 10px; /* Añade un margen superior de 10px para separar el mensaje del contenido anterior */
+}
+
+/* Media query para ajustar el diseño en pantallas pequeñas */
+@media screen and (max-width: 768px) {
   .navbar {
-    display: flex; /* Utiliza el modelo de caja flexible para organizar los elementos hijos */
-    flex-direction: column; /* Coloca los elementos hijos en una columna */
-    align-items: flex-start; /* Alinea los elementos hijos al inicio del contenedor a lo largo del eje transversal */
+    align-items: center; /* Centra los elementos hijos en la pantalla */
   }
-  
-  .menu {
-    list-style: none; /* Elimina los marcadores de lista predeterminados */
-    padding: 0; /* Elimina el relleno interno del ul */
-    margin: 0; /* Elimina el margen externo del ul */
-  }
-  
+
   .menu-icon {
-    cursor: pointer; /* Cambia el cursor al pasar sobre el elemento para indicar que es clicable */
-    padding: 10px; /* Añade un espacio interno alrededor del contenido */
+    padding: 10px 15px; /* Ajusta el espacio interno del icono de menú */
   }
-  
+
   .menu-link {
-    text-decoration: none; /* Elimina la decoración de texto (subrayado) de los enlaces */
-    color: #ffffff; /* Define el color del texto de los enlaces como blanco */
-    padding: 10px; /* Añade un espacio interno alrededor del texto del enlace */
-    display: block; /* Hace que cada enlace ocupe todo el ancho de su contenedor */
+    padding: 10px 15px; /* Ajusta el espacio interno de los enlaces del menú */
   }
-  
+
   .icon-link {
-    cursor: pointer; /* Cambia el cursor al pasar sobre el elemento para indicar que es clicable */
-    padding: 10px; /* Añade un espacio interno alrededor del ícono */
-    display: flex; /* Utiliza el modelo de caja flexible para el diseño del ícono */
-    align-items: center; /* Alinea el contenido del ícono en el centro a lo largo del eje transversal */
+    padding: 10px 15px; /* Ajusta el espacio interno del icono-link */
   }
-  
-  .submenu {
-    list-style: none; /* Elimina los marcadores de lista predeterminados */
-    padding: 0; /* Elimina el relleno interno del ul */
-    margin: 0 0 0 20px; /* Añade un margen izquierdo de 20px para desplazar el submenú hacia la derecha */
-  }
-  
-  .warning {
-    color: red; /* Define el color del texto del mensaje como rojo para destacar la advertencia */
-    margin-top: 10px; /* Añade un margen superior de 10px para separar el mensaje del contenido anterior */
-  }
-  
-  /* Media query para ajustar el diseño en pantallas pequeñas */
-  @media screen and (max-width: 768px) {
-    .navbar {
-      align-items: center; /* Centra los elementos hijos en la pantalla */
-    }
-  
-    .menu-icon {
-      padding: 10px 15px; /* Ajusta el espacio interno del icono de menú */
-    }
-  
-    .menu-link {
-      padding: 10px 15px; /* Ajusta el espacio interno de los enlaces del menú */
-    }
-  
-    .icon-link {
-      padding: 10px 15px; /* Ajusta el espacio interno del icono-link */
-    }
-  }
-  
+}

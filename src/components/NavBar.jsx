@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-
+import './NavBar.css';
+import logo from '../assets/image.png';
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
@@ -21,6 +22,8 @@ function NavBar() {
 
   return (
     <div className="container">
+      
+      <img className='img' src={logo} alt="" srcset="" />
       <nav className={`navbar ${menuOpen ? 'open' : ''}`}>
         <div className={`menu-icon ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
           <div className="menu-icon-line"></div>
