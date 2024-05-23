@@ -1,37 +1,46 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../firebaseConfig';  // Asegúrate de que la ruta es correcta
 import './login.css';
 import image from './image.png';
 import google from './google.png';
-import 'firebase/auth';
-
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        if (isRegistering) {
-            console.log('Registrando usuario...');
-        } else {
-            console.log('Iniciando sesión...');
+        setError('');
+        try {
+            if (isRegistering) {
+                await createUserWithEmailAndPassword(auth, email, password);
+                console.log('Usuario registrado');
+            } else {
+                await signInWithEmailAndPassword(auth, email, password);
+                console.log('Sesión iniciada');
+            }
+            navigate('/');  // Redirige al usuario a la página de inicio
+        } catch (error) {
+            setError('Error al autenticar');
+            console.error('Error al autenticar:', error);
         }
-        console.log('Email:', email);
-        console.log('Password:', password);
     };
 
-    const handleGoogleLogin = () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider)
-            .then((result) => {
-                // Handle successful login
-                console.log('Usuario de Google:', result.user);
-            })
-            .catch((error) => {
-                // Handle errors
-                console.error('Error al iniciar sesión con Google:', error);
-            });
+    const handleGoogleLogin = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            console.log('Usuario de Google:', result.user);
+            navigate('/');  // Redirige al usuario a la página de inicio
+        } catch (error) {
+            setError('Error al iniciar sesión con Google');
+            console.error('Error al iniciar sesión con Google:', error);
+        }
     };
 
     return (
@@ -68,10 +77,11 @@ function Login() {
                             <button type="submit">
                                 {isRegistering ? 'Registrarse' : 'Iniciar Sesión'}
                             </button>
+                            {error && <p className="error">{error}</p>}
                         </form>
                         <button onClick={handleGoogleLogin} className="google-login">
                             <img src={google} alt="Google" /> {/* Icono de Google */}
-                         Iniciar sesión con Google {/* Texto del botón */}
+                            Iniciar sesión con Google {/* Texto del botón */}
                         </button>
                         <p>
                             {isRegistering

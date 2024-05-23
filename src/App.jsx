@@ -1,3 +1,4 @@
+// App.jsx
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Salud from './components/Salud/Salud';
@@ -6,26 +7,27 @@ import Notificaciones from './components/Notificaciones';
 import Parametros from './components/parametros/Parametros';
 import Graficas from './components/graficas/Graficas';
 import Login from './components/login/Login';
+import PrivateRoute from './components/PrivateRoute';
+import { AuthProvider } from './components/AuthContext';
 
 import "./App.css";
 
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <Router>
         <NavBar />
         <Routes>
           <Route path="/" element={<Salud />} />
           <Route path="/Salud" element={<Salud />} />
-          <Route path="/Notificaciones" element={<Notificaciones />} />
-          <Route path="/Control" element={<Control />} />
-          <Route path="/Parametros" element={<Parametros />} />
-          <Route path="/Graficas" element={<Graficas />} />
+          <Route path="/Notificaciones" element={<PrivateRoute><Notificaciones /></PrivateRoute>} />
+          <Route path="/Control" element={<PrivateRoute><Control /></PrivateRoute>} />
+          <Route path="/Parametros" element={<PrivateRoute><Parametros /></PrivateRoute>} />
+          <Route path="/Graficas" element={<PrivateRoute><Graficas /></PrivateRoute>} />
           <Route path="/Login" element={<Login />} />
-
         </Routes>
       </Router>
-    </div>
+    </AuthProvider>
   );
 }
 

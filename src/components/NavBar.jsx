@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+// NavBar.jsx
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import './NavBar.css';
 import logo from '../assets/image.png';
+import { auth } from './firebaseConfig'; // Importa el objeto de autenticación de Firebase
+
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para rastrear si el usuario está autenticado
+
+  // Agrega un efecto de efecto secundario para verificar si el usuario está autenticado
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setIsLoggedIn(!!user); // Actualiza el estado de isLoggedIn basado en si hay un usuario autenticado o no
+    });
+    return () => unsubscribe();
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -15,15 +27,17 @@ function NavBar() {
   const toggleSubMenu = () => {
     setShowSubMenu(!showSubMenu);
     if (!showSubMenu) {
-      // Muestra un alert cuando se activa el submenú
       alert('¡Cuidado! Estás accediendo a opciones avanzadas.');
     }
   };
 
+  const handleLogout = () => {
+    auth.signOut(); // Cierra la sesión del usuario usando Firebase
+  };
+
   return (
     <div className="container">
-      
-      <img className='img' src={logo} alt="" srcset="" />
+      <img className='img' src={logo} alt="" srcSet="" />
       <nav className={`navbar ${menuOpen ? 'open' : ''}`}>
         <div className={`menu-icon ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
           <div className="menu-icon-line"></div>
@@ -45,7 +59,13 @@ function NavBar() {
               </ul>
             )}
           </li>
-          <li><Link className="menu-link" to="/Login">Login</Link></li>
+          <li>
+            {isLoggedIn ? (
+              <button className="menu-link" onClick={handleLogout}>Cerrar sesión</button>
+            ) : (
+              <Link className="menu-link" to="/Login">Login</Link>
+            )}
+          </li>
         </ul>
       </nav>
     </div>
