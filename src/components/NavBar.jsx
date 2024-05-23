@@ -7,6 +7,7 @@ import './NavBar.css';
 import logo from '../assets/image.png';
 import { auth } from './firebaseConfig'; // Importa el objeto de autenticación de Firebase
 
+
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
