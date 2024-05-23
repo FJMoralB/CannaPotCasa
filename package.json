@@ -19,11 +19,9 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
-    "recharts": "^2.12.7"
-=======
+    "recharts": "^2.12.7",
     "react-router-dom": "^6.23.1"
->>>>>>> c6358915502ffe903222d876f15963b6426b3bb0
+
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
