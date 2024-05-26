@@ -1,76 +1,103 @@
-.container {
-  position: relative; /* Establece el contenedor principal con posicionamiento relativo para facilitar el posicionamiento de elementos hijos */
-  display: flex; /* Utiliza el modelo de caja flexible para organizar los elementos hijos */
-  align-items: center; /* Alinea los elementos hijos verticalmente en el contenedor */
-}
-
+/* Estilos para la imagen del logo */
 .img {
-  width: 100%;
-  /* La imagen ocupa el ancho completo del contenedor */
-  max-width: 200px;
-  /* Ancho máximo de la imagen */
-  border-radius: 50%;
-  /* Borde redondeado para que la imagen sea circular */
-  margin-right: 20px; /* Espacio entre el logo y la barra de navegación */
+  width: 100px; /* Ancho máximo de la imagen */
+  height: auto; /* Ajusta la altura automáticamente */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  margin-right: 40px; /* Añade un margen derecho de 40px */
 }
 
+/* Estilos para el contenedor */
+.container {
+  display: flex;
+  justify-content: center; /* Centra la barra de navegación horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  padding: 10px 20px;
+  position: relative;
+}
+
+/* Estilos para la barra de navegación */
 .navbar {
-  display: flex; /* Utiliza el modelo de caja flexible para organizar los elementos hijos */
-  flex-direction: column; /* Coloca los elementos hijos en una columna */
-  align-items: flex-start; /* Alinea los elementos hijos al inicio del contenedor a lo largo del eje transversal */
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
 }
 
 .menu {
-  list-style: none; /* Elimina los marcadores de lista predeterminados */
-  padding: 0; /* Elimina el relleno interno del ul */
-  margin: 0; /* Elimina el margen externo del ul */
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.menu-icon {
-  cursor: pointer; /* Cambia el cursor al pasar sobre el elemento para indicar que es clicable */
-  padding: 10px; /* Añade un espacio interno alrededor del contenido */
+.menu.open {
+  display: block; /* Mostrar menú desplegable */
 }
 
 .menu-link {
-  text-decoration: none; /* Elimina la decoración de texto (subrayado) de los enlaces */
-  color: #ffffff; /* Define el color del texto de los enlaces como blanco */
-  padding: 10px; /* Añade un espacio interno alrededor del texto del enlace */
-  display: block; /* Hace que cada enlace ocupe todo el ancho de su contenedor */
+  text-decoration: none;
+  color: #ffffff;
+  padding: 10px;
+  display: block;
 }
 
 .icon-link {
-  cursor: pointer; /* Cambia el cursor al pasar sobre el elemento para indicar que es clicable */
-  padding: 10px; /* Añade un espacio interno alrededor del ícono */
-  display: flex; /* Utiliza el modelo de caja flexible para el diseño del ícono */
-  align-items: center; /* Alinea el contenido del ícono en el centro a lo largo del eje transversal */
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .submenu {
-  list-style: none; /* Elimina los marcadores de lista predeterminados */
-  padding: 0; /* Elimina el relleno interno del ul */
-  margin: 0 0 0 20px; /* Añade un margen izquierdo de 20px para desplazar el submenú hacia la derecha */
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 20px;
 }
 
 .warning {
-  color: red; /* Define el color del texto del mensaje como rojo para destacar la advertencia */
-  margin-top: 10px; /* Añade un margen superior de 10px para separar el mensaje del contenido anterior */
+  color: red;
+  margin-top: 10px;
 }
 
-/* Media query para ajustar el diseño en pantallas pequeñas */
+/* Estilos para el botón de imagen del menú */
+.menu-image-button {
+  display: none; /* Oculto por defecto */
+}
+
 @media screen and (max-width: 768px) {
+  .container {
+    justify-content: flex-start; /* Alinea la barra de navegación al inicio en pantallas pequeñas */
+  }
+
   .navbar {
-    align-items: center; /* Centra los elementos hijos en la pantalla */
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .menu-icon {
-    padding: 10px 15px; /* Ajusta el espacio interno del icono de menú */
+  .menu {
+    display: none; /* Ocultar el menú por defecto */
+    flex-direction: column;
+    width: 100%;
   }
 
-  .menu-link {
-    padding: 10px 15px; /* Ajusta el espacio interno de los enlaces del menú */
+  .menu.open {
+    display: flex; /* Mostrar menú desplegable */
   }
 
-  .icon-link {
-    padding: 10px 15px; /* Ajusta el espacio interno del icono-link */
+  .menu-link, .menu-link-login {
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .img {
+    display: none; /* Ocultar el logo en pantallas pequeñas */
+  
+  }
+
+  .menu-image-button {
+    display: block; /* Mostrar el botón de imagen del menú en pantallas pequeñas */
+    cursor: pointer;
+    width: 100px;
   }
 }

@@ -89,7 +89,7 @@
 
 /* Estilos para los campos de entrada del formulario */
 .formulario input {
-    width: 100%;
+    width: 50%;
     /* Los campos de entrada ocupan todo el ancho disponible */
     padding: 10px;
     /* Espaciado interno */

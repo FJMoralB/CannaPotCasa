@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import './NavBar.css';
 import logo from '../assets/image.png';
+import menuLogo from '../assets/image.png'; // Importa la imagen del botón del menú
 import { auth } from './firebaseConfig'; // Importa el objeto de autenticación de Firebase
-
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,13 +38,13 @@ function NavBar() {
 
   return (
     <div className="container">
-      <img className='img' src={logo} alt="" srcSet="" />
       <nav className={`navbar ${menuOpen ? 'open' : ''}`}>
-        <div className={`menu-icon ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
-          <div className="menu-icon-line"></div>
-          <div className="menu-icon-line"></div>
-          <div className="menu-icon-line"></div>
-        </div>
+        <img 
+          className="menu-image-button" 
+          src={menuLogo} 
+          alt="Menu" 
+          onClick={toggleMenu} 
+        />
         <ul className={`menu ${menuOpen ? 'open' : ''}`}>
           <li><Link className="menu-link" to="/Salud">Salud</Link></li>
           <li><Link className="menu-link" to="/Graficas">Graficas</Link></li>
@@ -64,11 +64,12 @@ function NavBar() {
             {isLoggedIn ? (
               <button className="menu-link" onClick={handleLogout}>Cerrar sesión</button>
             ) : (
-              <Link className="menu-link" to="/Login">Login</Link>
+              <Link className="menu-link-login" to="/Login">Login</Link>
             )}
           </li>
         </ul>
       </nav>
+      <img className='img' src={logo} alt="" srcSet="" />
     </div>
   );
 }

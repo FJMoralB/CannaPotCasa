@@ -46,13 +46,10 @@ function Login() {
     return (
         <>
             <div className="login">
-                <div className="header">
-                    <h1 className="titulo">Cannapot</h1>
-                    <h2 className="nombre">Maceta Inteligente</h2>
-                </div>
+          
 
                 <div className="content">
-                    <div className="imagen"> <img src={image} alt="logo" /></div>
+               
                     <div className="formulario">
                         <h2 className="form_inicio"></h2>
                         <form onSubmit={handleSubmit}>

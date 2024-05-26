@@ -1,16 +1,22 @@
-.contenedor {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Esto centra verticalmente el contenido */
-  }
-  
-  .Estado {
-    text-align: center;
-  }
-  
-  .imagen {
-    max-width: 100%; /* Para que la imagen no exceda el ancho del contenedor */
-    height: auto; /* Para mantener la proporción de la imagen */
-  }
-  
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.formulario {
+  margin-bottom: 20px;
+}
+
+.formulario label {
+  margin-right: 10px;
+}
+
+.maceta {
+  margin-bottom: 20px;
+}
+
+.maceta img {
+  max-width: 100%;
+  height: auto;
+}
