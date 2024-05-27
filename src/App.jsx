@@ -19,7 +19,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Salud />} />
-          <Route path="/Salud" element={<Salud />} />
+          <Route path="/Salud" element={<PrivateRoute><Salud /></PrivateRoute>} />
           <Route path="/Notificaciones" element={<PrivateRoute><Notificaciones /></PrivateRoute>} />
           <Route path="/Control" element={<PrivateRoute><Control /></PrivateRoute>} />
           <Route path="/Parametros" element={<PrivateRoute><Parametros /></PrivateRoute>} />

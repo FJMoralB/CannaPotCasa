@@ -1,6 +1,6 @@
 .container {
-  max-width: 600px;
-  margin: auto;
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
 }
 
@@ -9,14 +9,30 @@
 }
 
 .formulario label {
-  margin-right: 10px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.formulario input[type="text"],
+.formulario select,
+.formulario input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+}
+
+.formulario img {
+  max-width: 100px;
+  display: block;
+  margin-top: 10px;
 }
 
 .maceta {
-  margin-bottom: 20px;
+  text-align: center;
 }
 
 .maceta img {
-  max-width: 100%;
-  height: auto;
+  max-width: 200px;
+  margin: 0 auto;
+  display: block;
 }

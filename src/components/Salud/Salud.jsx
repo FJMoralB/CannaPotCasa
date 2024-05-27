@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { auth, firestore } from "../firebaseConfig";
+import React, { useState } from "react";
+import useMacetas from "./useMacetas";
 import datosPlanta from "../parametros/plantas.json"; // Importa el archivo JSON local
+import { Carousel } from 'react-responsive-carousel'; // Importa la biblioteca del carrusel
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importa los estilos del carrusel
 import "./Salud.css"; // Importa el archivo CSS de estilos
 
 function Salud() {
+  const { macetas, agregarMaceta, actualizarMaceta } = useMacetas();
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [macetas, setMacetas] = useState([]);
   const [nombre, setNombre] = useState("");
   const [semilla, setSemilla] = useState("");
   const [imagen, setImagen] = useState(null);
-
-  useEffect(() => {
-    const cargarMacetas = async () => {
-      const usuario = auth.currentUser;
-      if (usuario) {
-        const macetasRef = firestore.collection("macetas").where("usuarioId", "==", usuario.uid);
-        const snapshot = await macetasRef.get();
-        const macetasGuardadas = snapshot.docs.map(doc => doc.data());
-        setMacetas(macetasGuardadas);
-      }
-    };
-
-    cargarMacetas();
-  }, []);
+  const [editando, setEditando] = useState(false);
+  const [macetaEditandoId, setMacetaEditandoId] = useState(null);
+  const [imagenURL, setImagenURL] = useState(null);
 
   const handleNombreChange = (event) => {
     setNombre(event.target.value);
@@ -33,35 +24,43 @@ function Salud() {
   };
 
   const handleImagenChange = (event) => {
-    setImagen(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file) {
+      setImagen(file);
+      setImagenURL(URL.createObjectURL(file));
+    }
   };
 
-  const agregarMaceta = async () => {
-    const usuario = auth.currentUser;
-    if (usuario) {
-      const nuevaMaceta = {
-        nombre: nombre,
-        semilla: semilla,
-        imagen: imagen,
-        usuarioId: usuario.uid
-      };
+  const handleAgregarActualizarMaceta = () => {
+    const nuevaMaceta = {
+      nombre,
+      semilla,
+      imagen: imagenURL
+    };
 
-      // Guardar la maceta en Firestore
-      await firestore.collection("macetas").add(nuevaMaceta);
-      
-      // Recargar las macetas del usuario
-      const macetasRef = firestore.collection("macetas").where("usuarioId", "==", usuario.uid);
-      const snapshot = await macetasRef.get();
-      const macetasGuardadas = snapshot.docs.map(doc => doc.data());
-      setMacetas(macetasGuardadas);
-      
-      // Limpiar el formulario
-      setNombre("");
-      setSemilla("");
-      setImagen(null);
-      // Ocultar el formulario después de agregar la maceta
-      setMostrarFormulario(false);
+    if (editando) {
+      actualizarMaceta(macetaEditandoId, nuevaMaceta);
+    } else {
+      agregarMaceta(nuevaMaceta);
     }
+
+    // Limpiar el formulario
+    setNombre("");
+    setSemilla("");
+    setImagen(null);
+    setImagenURL(null);
+    setMostrarFormulario(false);
+    setEditando(false);
+    setMacetaEditandoId(null);
+  };
+
+  const iniciarEdicion = (maceta) => {
+    setNombre(maceta.nombre);
+    setSemilla(maceta.semilla);
+    setImagenURL(maceta.imagen);
+    setMostrarFormulario(true);
+    setEditando(true);
+    setMacetaEditandoId(maceta.id);
   };
 
   return (
@@ -92,18 +91,25 @@ function Salud() {
           <div>
             <label>Imagen de la maceta:</label>
             <input type="file" accept="image/*" onChange={handleImagenChange} />
+            {imagenURL && <img src={imagenURL} alt="Vista previa" />}
           </div>
-          <button onClick={agregarMaceta}>Agregar Maceta</button>
+          <button onClick={handleAgregarActualizarMaceta}>
+            {editando ? "Actualizar Maceta" : "Agregar Maceta"}
+          </button>
         </div>
       )}
       <div>
-        {macetas.map((maceta, index) => (
-          <div className="maceta" key={index}>
-            <h2>{maceta.nombre}</h2>
-            <p>Semilla: {maceta.semilla}</p>
-            <img src={URL.createObjectURL(maceta.imagen)} alt="Maceta" />
-          </div>
-        ))}
+        <h2>Tus Macetas</h2>
+        <Carousel>
+          {macetas.map((maceta, index) => (
+            <div className="maceta" key={index}>
+              <h2>{maceta.nombre}</h2>
+              <p>Semilla: {maceta.semilla}</p>
+              <img src={maceta.imagen} alt="Maceta" />
+              <button onClick={() => iniciarEdicion(maceta)}>Editar</button>
+            </div>
+          ))}
+        </Carousel>
       </div>
     </div>
   );
