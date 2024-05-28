@@ -33,7 +33,7 @@ const MacetaForm = ({ onSubmit, initialData = {}, semillas }) => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent form submission
+        e.preventDefault();
         if (!formData.nombre || !formData.semilla) {
             alert("Todos los campos son obligatorios.");
             return;
@@ -46,6 +46,10 @@ const MacetaForm = ({ onSubmit, initialData = {}, semillas }) => {
             imagenURL: null,
         });
     };
+
+    if (!Array.isArray(semillas) || semillas.length === 0) {
+        return <div>No hay semillas disponibles.</div>;
+    }
 
     return (
         <div className="form-container">
@@ -70,8 +74,8 @@ const MacetaForm = ({ onSubmit, initialData = {}, semillas }) => {
                     >
                         <option value="">Seleccione una semilla</option>
                         {semillas.map((planta, index) => (
-                            <option key={index} value={planta.Nombre}>
-                                {planta.Nombre}
+                            <option key={index} value={planta.id}>
+                                {planta.nombre}
                             </option>
                         ))}
                     </select>

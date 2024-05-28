@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useMacetas from "./useMacetas";
 import useSemillas from "./useSemillas";
-import './MacetaForm.css';
+import './Salud.css';
 import MacetaForm from "./MacetaForm";
 
 function Salud() {
@@ -25,6 +25,11 @@ function Salud() {
     setMostrarFormulario(true);
   };
 
+  if (!semillas || semillas.length === 0) {
+    console.log('Semillas no disponibles o vacías'); // Mensaje de depuración
+    return <div>Cargando semillas...</div>;
+  }
+
   return (
     <div className="container">
       <h1>Agregar Macetas</h1>
@@ -42,7 +47,7 @@ function Salud() {
       )}
       <div className="maceta-list">
         {macetas.map((maceta) => (
-          <div key={maceta.id}>
+          <div key={maceta.id} className="maceta">
             <h2>{maceta.nombre}</h2>
             <p>{maceta.semilla}</p>
             <img src={maceta.imagenURL} alt={maceta.nombre} />

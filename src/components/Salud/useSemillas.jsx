@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import axios from 'axios';
 
 const useSemillas = () => {
   const [semillas, setSemillas] = useState([]);
@@ -8,14 +7,13 @@ const useSemillas = () => {
   useEffect(() => {
     const fetchSemillas = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "semillas"));
-        const semillasData = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setSemillas(semillasData);
+        console.log('Intentando obtener semillas'); // Mensaje de depuración
+        const response = await axios.get('http://localhost:3001/semillas'); // Asegúrate de que el puerto es 3001
+        console.log('Datos recibidos:', response.data); // Mensaje de depuración
+        setSemillas(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error("Error fetching semillas: ", error);
+        setSemillas([]);
       }
     };
 
