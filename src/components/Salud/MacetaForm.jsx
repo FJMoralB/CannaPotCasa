@@ -1,103 +1,77 @@
-import React, { useState, useEffect } from "react";
-import './MacetaForm.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './Salud.css';
 
-const MacetaForm = ({ onSubmit, initialData = {}, semillas }) => {
-    const defaultData = {
-        nombre: "",
-        semilla: "",
-        imagen: null,
-        imagenURL: null,
-        ...initialData
+const MacetaForm = () => {
+  const [nombre, setNombre] = useState('');
+  const [semillaId, setSemillaId] = useState('');
+  const [imagen, setImagen] = useState(null);
+  const [semillas, setSemillas] = useState([]);
+
+  useEffect(() => {
+    const fetchSemillas = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/semillas');
+        setSemillas(response.data);
+      } catch (error) {
+        console.error('Error al obtener las semillas:', error);
+      }
     };
 
-    const [formData, setFormData] = useState(defaultData);
+    fetchSemillas();
+  }, []);
 
-    useEffect(() => {
-        setFormData(defaultData);
-    }, [initialData]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+    const formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('semilla_id', semillaId);
+    formData.append('imagen', imagen);
 
-    const handleImagenChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setFormData({
-                ...formData,
-                imagen: file,
-                imagenURL: URL.createObjectURL(file)
-            });
+    try {
+      console.log('Enviando datos:', { nombre, semillaId, imagen });
+      const response = await axios.post('http://localhost:3001/macetas', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
         }
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!formData.nombre || !formData.semilla) {
-            alert("Todos los campos son obligatorios.");
-            return;
-        }
-        onSubmit(formData);
-        setFormData({
-            nombre: "",
-            semilla: "",
-            imagen: null,
-            imagenURL: null,
-        });
-    };
-
-    if (!Array.isArray(semillas) || semillas.length === 0) {
-        return <div>No hay semillas disponibles.</div>;
+      });
+      console.log('Respuesta del servidor:', response.data);
+    } catch (error) {
+      console.error('Error al enviar la maceta:', error);
     }
+  };
 
-    return (
-        <div className="form-container">
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="nombre">Nombre de la maceta</label>
-                    <input
-                        type="text"
-                        id="nombre"
-                        name="nombre"
-                        value={formData.nombre}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="semilla">Selecciona una semilla</label>
-                    <select
-                        id="semilla"
-                        name="semilla"
-                        value={formData.semilla}
-                        onChange={handleChange}
-                    >
-                        <option value="">Seleccione una semilla</option>
-                        {semillas.map((planta, index) => (
-                            <option key={index} value={planta.id}>
-                                {planta.nombre}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="imagen">Subir Imagen</label>
-                    <input
-                        type="file"
-                        id="imagen"
-                        accept="image/*"
-                        onChange={handleImagenChange}
-                    />
-                    {formData.imagenURL && (
-                        <img src={formData.imagenURL} alt="Maceta" className="preview-image" />
-                    )}
-                </div>
-                <button type="submit">
-                    {initialData.nombre ? "Actualizar Maceta" : "Agregar Maceta"}
-                </button>
-            </form>
-        </div>
-    );
+  return (
+    <div className="container">
+      <form className="formulario" onSubmit={handleSubmit}>
+        <label htmlFor="nombre">Nombre:</label>
+        <input
+          type="text"
+          id="nombre"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+        />
+
+        <label htmlFor="semilla">Semilla:</label>
+        <select id="semilla" value={semillaId} onChange={(e) => setSemillaId(e.target.value)}>
+          <option value="">Seleccione una semilla</option>
+          {semillas.map((semilla) => (
+            <option key={semilla.id} value={semilla.id}>{semilla.nombre}</option>
+          ))}
+        </select>
+
+        <label htmlFor="imagen">Imagen:</label>
+        <input
+          type="file"
+          id="imagen"
+          onChange={(e) => setImagen(e.target.files[0])}
+        />
+        
+        <button type="submit">Guardar</button>
+      </form>
+    </div>
+  );
 };
 
 export default MacetaForm;
