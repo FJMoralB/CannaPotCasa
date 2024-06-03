@@ -1,95 +1,97 @@
-/* Estilo general para contenedor principal */
-.container {
-  max-width: 1200px; /* Ancho máximo del contenedor */
-  margin: 0 auto; /* Centrado horizontal */
-  padding: 20px; /* Espaciado interno */
+/* Salud.css */
+
+.container-Salud {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
 }
 
-/* Estilo del formulario */
+.saludName {
+  font-size: 2.5em;
+  margin: 20px 0;
+}
+
+.formulario-container {
+  margin-top: 20px;
+}
+
+.carrusel-container {
+  margin-top: 40px;
+}
+
+.no-macetas {
+  margin-top: 20px;
+}
+
+.no-macetas p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: green;
+}
+
 .formulario {
-  background-color: #f9f9f9; /* Fondo claro */
-  padding: 20px; /* Espaciado interno */
-  margin-bottom: 20px; /* Espaciado inferior */
-  border-radius: 8px; /* Bordes redondeados */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .formulario label {
-  display: block; /* Mostrar como bloque */
-  margin-bottom: 8px; /* Espaciado inferior */
-  font-weight: bold; /* Negrita */
+  margin-top: 10px;
+  font-size: 1.2em;
 }
 
-.formulario input[type="text"],
+.formulario input,
 .formulario select,
-.formulario input[type="file"] {
-  width: 100%; /* Ancho completo */
-  padding: 10px; /* Espaciado interno */
-  margin-bottom: 12px; /* Espaciado inferior */
-  border: 1px solid #ccc; /* Borde gris claro */
-  border-radius: 4px; /* Bordes redondeados */
-  box-sizing: border-box; /* Incluir padding y border en el ancho total */
-}
-
-/* Estilo para el botón del formulario */
 .formulario button {
-  background-color: #28a745; /* Fondo verde */
-  color: white; /* Texto blanco */
-  padding: 10px 20px; /* Espaciado interno */
-  border: none; /* Sin borde */
-  border-radius: 4px; /* Bordes redondeados */
-  cursor: pointer; /* Puntero de mano */
-  font-size: 16px; /* Tamaño de fuente */
-  transition: background-color 0.3s; /* Transición suave para el fondo */
+  margin-top: 5px;
+  padding: 10px;
+  font-size: 1em;
+  width: 100%;
+  max-width: 400px;
 }
 
-.formulario button:hover {
-  background-color: #218838; /* Fondo verde oscuro al pasar el mouse */
+.carrusel-container h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
 }
 
-/* Estilo para el carrusel */
-.carrusel-container {
-  margin-top: 20px; /* Espaciado superior */
-}
-
-.carousel .slide img {
-  max-height: 400px; /* Altura máxima de las imágenes */
-  object-fit: cover; /* Recortar para cubrir el contenedor */
-  border-radius: 8px; /* Bordes redondeados */
+.carousel .slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .carousel .legend {
-  background: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
-  color: white; /* Texto blanco */
-  padding: 10px; /* Espaciado interno */
-  border-radius: 4px; /* Bordes redondeados */
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  color: white;
+  font-size: 1.2em;
+  text-align: center;
 }
 
-/* Estilos responsivos */
+.carousel button {
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .container {
-    padding: 10px; /* Reducir padding en pantallas pequeñas */
+  .saludName {
+    font-size: 2em;
   }
 
-  .formulario button {
-    width: 100%; /* Botón a ancho completo en pantallas pequeñas */
-    margin-bottom: 10px; /* Espaciado inferior */
-  }
-
-  .carousel .slide img {
-    max-height: 300px; /* Reducir altura máxima de las imágenes */
-  }
-}
-
-@media (max-width: 480px) {
-  .formulario {
-    padding: 10px; /* Reducir padding en pantallas muy pequeñas */
-  }
-
-  .formulario label,
-  .formulario input[type="text"],
+  .formulario input,
   .formulario select,
-  .formulario input[type="file"] {
-    font-size: 14px; /* Reducir tamaño de fuente */
+  .formulario button {
+    width: 90%;
+  }
+
+  .carrusel-container h2 {
+    font-size: 1.5em;
   }
 }

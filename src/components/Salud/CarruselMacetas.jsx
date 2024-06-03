@@ -58,7 +58,7 @@ const CarruselMacetas = () => {
 
   return (
     <div className="carrusel-container">
-      <h2>Macetas Guardadas</h2>
+      <h2>Tus Macetas</h2>
       {editingMaceta ? (
         <form onSubmit={handleUpdate}>
           <input

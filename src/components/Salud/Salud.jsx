@@ -21,10 +21,10 @@ const Salud = () => {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Gestión de Macetas</h1>
-      <MacetaForm />
-      <CarruselMacetas />
+    <div className="container-Salud">
+      <h1 className='saludName'>Salud de Maceta</h1>
+      <div className="formulario"><MacetaForm / ></div>
+      <div className="carrusel"><CarruselMacetas /></div>
     </div>
   );
 };
