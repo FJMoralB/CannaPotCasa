@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import plantasData from './plantas.json';
-
 import './parametros.css';
 
 function MultipleRangeInputs() {
@@ -64,7 +63,7 @@ function MultipleRangeInputs() {
 
   return (
     <div className='parametros-container'>
-      <h1>Parametros Manuales</h1>
+      <h1>Recetas Manuales</h1>
       <div className="select-container">
         <label htmlFor="plantaSelect">Selecciona una planta:</label>
         <select id="plantaSelect" onChange={handlePlantaChange}>
@@ -77,41 +76,59 @@ function MultipleRangeInputs() {
 
       {plantaSeleccionada && (
         <div className="parametros">
-          <span>Temperatura: {values.range1} ºC</span>
-          <input type="range" id="range1" min="15" max="36" value={values.range1} onChange={handleRangeChange} />
+          <div>
+            <span>Temperatura: {values.range1} ºC</span>
+            <input type="range" id="range1" min="15" max="36" value={values.range1} onChange={handleRangeChange} />
+          </div>
 
-          <span>Luz Azul: {values.range2} nm</span>
-          <input type="range" id="range2" min="350" max="550" value={values.range2} onChange={handleRangeChange} />
+          <div>
+            <span>Luz Azul: {values.range2} nm</span>
+            <input type="range" id="range2" min="350" max="550" value={values.range2} onChange={handleRangeChange} />
+          </div>
 
-          <span>Luz Roja: {values.range3} nm</span>
-          <input type="range" id="range3" min="600" max="800" value={values.range3} onChange={handleRangeChange} />
+          <div>
+            <span>Luz Roja: {values.range3} nm</span>
+            <input type="range" id="range3" min="600" max="800" value={values.range3} onChange={handleRangeChange} />
+          </div>
 
-          <span>Luz Roja Lejano: {values.range4} nm</span>
-          <input type="range" id="range4" min="700" max="800" value={values.range4} onChange={handleRangeChange} />
+          <div>
+            <span>Luz Roja Lejano: {values.range4} nm</span>
+            <input type="range" id="range4" min="700" max="800" value={values.range4} onChange={handleRangeChange} />
+          </div>
 
-          <span>Luz Blanca: {values.range5} lux</span>
-          <input type="range" id="range5" min="0" max="100" value={values.range5} onChange={handleRangeChange} />
+          <div>
+            <span>Luz Blanca: {values.range5} lux</span>
+            <input type="range" id="range5" min="0" max="100" value={values.range5} onChange={handleRangeChange} />
+          </div>
 
-          <span>Humedad: {values.range6} Hr</span>
-          <input type="range" id="range6" min="30" max="100" value={values.range6} onChange={handleRangeChange} />
+          <div>
+            <span>Humedad: {values.range6} Hr</span>
+            <input type="range" id="range6" min="30" max="100" value={values.range6} onChange={handleRangeChange} />
+          </div>
 
-          <span>Abono A: {values.range7} ml/min</span>
-          <input type="range" id="range7" min="1" max="10" value={values.range7} onChange={handleRangeChange} />
+          <div>
+            <span>Abono A: {values.range7} ml/min</span>
+            <input type="range" id="range7" min="1" max="10" value={values.range7} onChange={handleRangeChange} />
+          </div>
 
-          <span>Abono B: {values.range8} ml/min</span>
-          <input type="range" id="range8" min="0" max="10" value={values.range8} onChange={handleRangeChange} />
+          <div>
+            <span>Abono B: {values.range8} ml/min</span>
+            <input type="range" id="range8" min="0" max="10" value={values.range8} onChange={handleRangeChange} />
+          </div>
 
-          <span>Ph: {values.range9} ml/min</span>
-          <input type="range" id="range9" min="0" max="10" value={values.range9} onChange={handleRangeChange} />
+          <div>
+            <span>Ph: {values.range9} ml/min</span>
+            <input type="range" id="range9" min="0" max="10" value={values.range9} onChange={handleRangeChange} />
+          </div>
 
-          <span>Agua: {values.range10} ml/min</span>
-          <input type="range" id="range10" min="0" max="50" value={values.range10} onChange={handleRangeChange} />
-          
-
-          {/* Botón para enviar los valores de los rangos */}
-          <button onClick={handleSubmit}>Enviar</button>
+          <div>
+            <span>Agua: {values.range10} ml/min</span>
+            <input type="range" id="range10" min="0" max="50" value={values.range10} onChange={handleRangeChange} />
+          </div>
         </div>
       )}
+
+      <button onClick={handleSubmit}>Enviar</button>
     </div>
   );
 }

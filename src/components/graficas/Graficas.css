@@ -1,14 +1,56 @@
-/* Estilos para el contenedor del gráfico */
 .graficas-container {
-    width: 100%; /* El contenedor ocupará todo el ancho disponible */
-    height: 400px; /* Altura inicial del contenedor */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.graficas-container > div {
+  width: 100%;
+  height: 400px;
+}
+
+/* Estilos para los gráficos */
+.grafico-bd,
+.grafico-tiempo-real {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos para el contenedor de los datos en tiempo real */
+.datos-tiempo-real {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos adicionales para la lista de datos */
+.datos-tiempo-real ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.datos-tiempo-real li {
+  margin: 10px 0;
+}
+
+/* Ajustes para diseño responsivo */
+@media (max-width: 600px) {
+  .graficas-container {
+    grid-template-columns: 1fr;
   }
-  
-  /* Estilos para hacer que el gráfico sea responsive */
+
   .graficas-container > div {
-    width: 100%;
-    height: 100%;
+    height: auto; /* Ajusta la altura automáticamente en pantallas pequeñas */
   }
-  
-  /* Estilos adicionales si es necesario */
-  
+}

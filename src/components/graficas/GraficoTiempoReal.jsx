@@ -33,7 +33,6 @@ const GraficoTiempoReal = () => {
 
   return (
     <div className="datos-tiempo-real">
-      <h2>Datos Tiempo Real</h2>
       <ul>
         <li>Temperatura: {datos.temperatura}°C</li>
         <li>Humedad: {datos.humedad}%</li>

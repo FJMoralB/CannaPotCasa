@@ -10,7 +10,7 @@ const GraficoBD = () => {
       { label: 'Temperatura', data: [], borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' },
       { label: 'Humedad', data: [], borderColor: 'rgba(75, 75, 192, 1)', backgroundColor: 'rgba(75, 75, 192, 0.2)' },
       { label: 'Peso', data: [], borderColor: 'rgba(192, 75, 75, 1)', backgroundColor: 'rgba(192, 75, 75, 0.2)' },
-      { label: 'Dendometro', data: [], borderColor: 'rgba(75, 192, 75, 1)', backgroundColor: 'rgba(75, 192, 75, 0.2)' },
+      { label: 'Dendómetro', data: [], borderColor: 'rgba(75, 192, 75, 1)', backgroundColor: 'rgba(75, 192, 75, 0.2)' },
       { label: 'PH', data: [], borderColor: 'rgba(192, 192, 75, 1)', backgroundColor: 'rgba(192, 192, 75, 0.2)' },
       // Agregar más datasets para otros parámetros si es necesario
     ]

@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Salud from './components/Salud/Salud';
-import Control from './components/Control';
+import Control from './components/Control/Control';
 import Notificaciones from './components/Notificaciones';
 import Parametros from './components/parametros/Parametros';
 import Graficas from './components/graficas/Graficas';
