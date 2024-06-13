@@ -10,7 +10,7 @@ const Salud = () => {
   useEffect(() => {
     const fetchSemillas = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/semillas');
+        const response = await axios.get('http://localhost:5000/api/semillas');
         setSemillas(response.data);
       } catch (error) {
         console.error('Error al obtener las semillas:', error);
@@ -23,7 +23,7 @@ const Salud = () => {
   return (
     <div className="container-Salud">
       <h1 className='saludName'>Salud de Maceta</h1>
-      <div className="formulario"><MacetaForm / ></div>
+      <div className="formulario"><MacetaForm semillas={semillas} /></div>
       <div className="carrusel"><CarruselMacetas /></div>
     </div>
   );

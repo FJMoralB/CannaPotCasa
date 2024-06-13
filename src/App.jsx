@@ -18,7 +18,7 @@ function App() {
       <Router>
         <NavBar />
         <Routes>
-          <Route path="/" element={<Salud />} />
+          <Route path="/" element={<Login />} />
           <Route path="/Salud" element={<PrivateRoute><Salud /></PrivateRoute>} />
           <Route path="/Notificaciones" element={<PrivateRoute><Notificaciones /></PrivateRoute>} />
           <Route path="/Control" element={<PrivateRoute><Control /></PrivateRoute>} />

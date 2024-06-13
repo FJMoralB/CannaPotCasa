@@ -16,14 +16,7 @@ const GraficoTiempoReal = () => {
 
   useEffect(() => {
     socket.on('nuevo-dato', (nuevoDato) => {
-      setDatos({
-        temperatura: nuevoDato.temperatura,
-        humedad: nuevoDato.humedad,
-        peso: nuevoDato.peso,
-        dendometro: nuevoDato.dendometro,
-        ph: nuevoDato.ph
-        // Actualiza más parámetros si es necesario
-      });
+      setDatos(nuevoDato);
     });
 
     return () => {

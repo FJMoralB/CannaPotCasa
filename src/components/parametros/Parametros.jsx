@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import plantasData from './plantas.json';
+import axios from 'axios';
 import './parametros.css';
 
 function MultipleRangeInputs() {
@@ -23,6 +23,20 @@ function MultipleRangeInputs() {
   // Define el estado para almacenar la planta seleccionada
   const [plantaSeleccionada, setPlantaSeleccionada] = useState(null);
 
+  // Define el estado para almacenar la lista de plantas
+  const [plantasData, setPlantasData] = useState([]);
+
+  // Obtener datos de la API al montar el componente
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/semillas')
+      .then(response => {
+        setPlantasData(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener los datos:', error);
+      });
+  }, []);
+
   // Función para manejar los cambios en los input de rango
   const handleRangeChange = (event) => {
     const { id, value } = event.target;
@@ -39,16 +53,16 @@ function MultipleRangeInputs() {
     setPlantaSeleccionada(plantaSeleccionada);
     // Cargar los valores de los parámetros de la planta seleccionada
     setValues({
-      range1: plantaSeleccionada.Temperatura,
-      range2: plantaSeleccionada['Luz azul'],
-      range3: plantaSeleccionada['Luz Roja'],
-      range4: plantaSeleccionada['Luz Roja Lejano'],
-      range5: plantaSeleccionada['Luz Blanca'],
-      range6: plantaSeleccionada.Humedad,
-      range7: plantaSeleccionada['Abono A'],
-      range8: plantaSeleccionada['Abono B'],
-      range9: plantaSeleccionada.Ph,
-      range10: plantaSeleccionada.Agua,
+      range1: plantaSeleccionada.temperatura,
+      range2: plantaSeleccionada.luz_azul,
+      range3: plantaSeleccionada.luz_rojo,
+      range4: plantaSeleccionada.luz_rojo_lejano,
+      range5: plantaSeleccionada.luz_blanca,
+      range6: plantaSeleccionada.humedad,
+      range7: plantaSeleccionada.abono_a,
+      range8: plantaSeleccionada.abono_b,
+      range9: 0, // Agregar si hay una columna para Ph
+      range10: plantaSeleccionada.agua,
     });
   };
 
@@ -69,7 +83,7 @@ function MultipleRangeInputs() {
         <select id="plantaSelect" onChange={handlePlantaChange}>
           <option value="-1">Selecciona una planta</option>
           {plantasData.map((planta, index) => (
-            <option key={index} value={index}>{planta.Nombre}</option>
+            <option key={index} value={index}>{planta.nombre}</option>
           ))}
         </select>
       </div>

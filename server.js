@@ -1,148 +1,83 @@
 const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
+const cors = require('cors');
+const { Pool } = require('pg');
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
-const cors = require('cors');
-const influx = require('./db');
 
 const app = express();
-const server = http.createServer(app);
+const port = 5000;
 
-// Configuración de CORS para Socket.io
-const io = socketIo(server, {
-  cors: {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"]
-  }
-});
-
-// Configuración de CORS para Express
-app.use(cors({ 
-  origin: "http://localhost:5173",
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type"]
-}));
-
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Crear la carpeta 'uploads' si no existe
-const uploadDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
-
-// Configuración de Multer para manejar archivos
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'CannaPot',
+  password: 'root',
+  port: 5432,
 });
+
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-app.get('/', (req, res) => {
-  res.send('Servidor funcionando');
-});
-
-app.get('/semillas', async (req, res) => {
+app.get('/api/semillas', async (req, res) => {
   try {
-    const results = await influx.query('SELECT * FROM semilla');
-    res.send(results);
-  } catch (error) {
-    console.error('Error al obtener las semillas:', error);
-    res.status(500).send(error);
+    const result = await pool.query('SELECT * FROM semillas');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error al obtener las semillas' });
   }
 });
 
-app.post('/macetas', upload.single('imagen'), async (req, res) => {
+app.get('/api/macetas', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT macetas.id, macetas.nombre, macetas.semilla_id, macetas.imagen, semillas.nombre AS nombre_semilla
+      FROM macetas
+      JOIN semillas ON macetas.semilla_id = semillas.id
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error al obtener las macetas' });
+  }
+});
+
+app.post('/api/macetas', upload.single('imagen'), async (req, res) => {
   const { nombre, semilla_id } = req.body;
-  const imagen_url = req.file ? `/uploads/${req.file.filename}` : null;
-
-  if (!nombre || !semilla_id) {
-    return res.status(400).send('Faltan campos requeridos: nombre o semilla_id');
-  }
+  const imagen = req.file ? req.file.buffer : null;
 
   try {
-    await influx.writePoints([
-      {
-        measurement: 'macetas',
-        tags: { id: Date.now().toString() },
-        fields: { nombre, semilla_id: parseInt(semilla_id), imagen_url }
-      }
-    ]);
-    res.send({ nombre, semilla_id, imagen_url });
-  } catch (error) {
-    console.error('Error al insertar la maceta:', error);
-    res.status(500).send(error);
+    const result = await pool.query(
+      'INSERT INTO macetas (nombre, semilla_id, imagen) VALUES ($1, $2, $3) RETURNING *',
+      [nombre, semilla_id, imagen]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error al crear la maceta' });
   }
 });
 
-app.get('/macetas', async (req, res) => {
-  try {
-    const results = await influx.query('SELECT * FROM macetas');
-    res.send(results);
-  } catch (error) {
-    console.error('Error al obtener las macetas:', error);
-    res.status(500).send(error);
-  }
-});
-
-app.get('/datos-graficos', async (req, res) => {
-  try {
-    const results = await influx.query('SELECT * FROM datos_sensores');
-    res.send(results);
-  } catch (error) {
-    console.error('Error al obtener los datos de gráficos:', error);
-    res.status(500).send(error);
-  }
-});
-
-app.post('/datos-tiempo-real', async (req, res) => {
-  const {
-    sensor_id, nombre, descripcion, ciclo, clima, temperatura, luz_blanca,
-    luz_roja, luz_rojo_lejano, luz_azul, humedad, abono_a, abono_b, ph, agua
-  } = req.body;
+app.put('/api/macetas/:id', upload.single('imagen'), async (req, res) => {
+  const { id } = req.params;
+  const { nombre, semilla_id } = req.body;
+  const imagen = req.file ? req.file.buffer : null;
 
   try {
-    await influx.writePoints([
-      {
-        measurement: 'datos_sensores',
-        tags: { id: Date.now().toString() },
-        fields: {
-          sensor_id, nombre, descripcion, ciclo, clima, temperatura, luz_blanca,
-          luz_roja, luz_rojo_lejano, luz_azul, humedad, abono_a, abono_b, ph, agua
-        },
-        timestamp: new Date(),
-      }
-    ]);
-
-    io.emit('nuevo-dato', {
-      sensor_id, nombre, descripcion, ciclo, clima, temperatura, luz_blanca,
-      luz_roja, luz_rojo_lejano, luz_azul, humedad, abono_a, abono_b, ph, agua,
-      timestamp: new Date()
-    });
-    res.send({ message: 'Datos insertados correctamente' });
-  } catch (error) {
-    console.error('Error al insertar datos del sensor:', error);
-    res.status(500).send(error);
+    const result = await pool.query(
+      'UPDATE macetas SET nombre = $1, semilla_id = $2, imagen = $3 WHERE id = $4 RETURNING *',
+      [nombre, semilla_id, imagen, id]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error al actualizar la maceta' });
   }
 });
 
-io.on('connection', (socket) => {
-  console.log('Cliente conectado');
-
-  socket.on('disconnect', () => {
-    console.log('Cliente desconectado');
-  });
-});
-
-const PORT = process.env.PORT || 3001;
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Servidor corriendo en http://localhost:${port}`);
 });

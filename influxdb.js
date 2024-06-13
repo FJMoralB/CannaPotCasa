@@ -1,16 +1,17 @@
 const { InfluxDB, Point } = require('@influxdata/influxdb-client');
 
-const token = 'tu_token';  // Reemplaza con tu token
-const org = 'tu_organizacion';  // Reemplaza con tu organización
-const bucket = 'tu_bucket';  // Reemplaza con tu bucket
+// Configuración de la URL y el token de InfluxDB
+const url = 'http://localhost:8086';
+const token = 'tu-token-de-influxdb';
+const org = 'tu-organizacion';
+const bucket = 'tu-bucket';
 
-const client = new InfluxDB({ url: 'http://localhost:8086', token });
-
-const writeApi = client.getWriteApi(org, bucket);
-const queryApi = client.getQueryApi(org);
+// Crear una instancia del cliente de InfluxDB
+const influxDB = new InfluxDB({ url, token });
 
 module.exports = {
-  writeApi,
-  queryApi,
-  Point,
+  influxDB,
+  org,
+  bucket,
+  Point
 };
