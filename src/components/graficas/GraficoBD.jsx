@@ -12,17 +12,18 @@ const GraficoBD = () => {
       { label: 'Peso', data: [], borderColor: 'rgba(192, 75, 75, 1)', backgroundColor: 'rgba(192, 75, 75, 0.2)' },
       { label: 'Dendómetro', data: [], borderColor: 'rgba(75, 192, 75, 1)', backgroundColor: 'rgba(75, 192, 75, 0.2)' },
       { label: 'PH', data: [], borderColor: 'rgba(192, 192, 75, 1)', backgroundColor: 'rgba(192, 192, 75, 0.2)' },
-      // Agregar más datasets para otros parámetros si es necesario
     ]
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/datos-graficos');
+        const response = await axios.get('http://localhost:5000/api/datos-graficos');
         const fetchedData = response.data;
 
-        const labels = fetchedData.map(d => d.timestamp);
+        console.log('Datos recuperados:', fetchedData);
+
+        const labels = fetchedData.map(d => new Date(d.timestamp).toLocaleTimeString());
         const temperaturas = fetchedData.map(d => d.temperatura);
         const humedades = fetchedData.map(d => d.humedad);
         const pesos = fetchedData.map(d => d.peso);
@@ -37,7 +38,6 @@ const GraficoBD = () => {
             { ...data.datasets[2], data: pesos },
             { ...data.datasets[3], data: dendometros },
             { ...data.datasets[4], data: phs },
-            // Agregar datos para otros parámetros si es necesario
           ],
         });
       } catch (error) {

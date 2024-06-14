@@ -11,7 +11,6 @@ const GraficoTiempoReal = () => {
     peso: 0,
     dendometro: 0,
     ph: 0
-    // Agrega más parámetros si es necesario
   });
 
   useEffect(() => {
@@ -32,7 +31,6 @@ const GraficoTiempoReal = () => {
         <li>Peso: {datos.peso}kg</li>
         <li>Dendómetro: {datos.dendometro}mm</li>
         <li>PH: {datos.ph}</li>
-        {/* Agrega más elementos de lista para otros parámetros si es necesario */}
       </ul>
     </div>
   );
