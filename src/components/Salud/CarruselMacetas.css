@@ -1,0 +1,106 @@
+.carrusel-container {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 80%;
+  }
+  
+  .add-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  
+  .add-button:hover {
+    background-color: #45a049;
+  }
+  
+  .maceta-item {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .image-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .edit-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .carousel .control-arrow {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 0 15px;
+  }
+  
+  .carousel .control-arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  .carousel .carousel-slider {
+    padding: 0 20px;
+  }
+  
+  .carousel .thumbs-wrapper {
+    margin: 20px 0;
+  }
+  
+  @media (max-width: 768px) {
+    .carrusel-container {
+      max-width: 100%;
+    }
+  
+    .add-button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+    }
+  
+    .carousel .control-arrow {
+      width: 30px;
+      height: 30px;
+      margin: 0 10px;
+    }
+  
+    .edit-button {
+      width: 100%;
+    }
+  }
+  

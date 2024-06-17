@@ -147,33 +147,44 @@ let peso = 4;
 let dendometro = 0;
 let ph = 5.6;
 
+let realTimeData = [];
+const generateData = () => {
+  temperatura = Math.min(temperatura + Math.random(), 30);
+  humedad = Math.min(humedad + Math.random(), 80);
+  peso = Math.min(peso + Math.random(), 39);
+  dendometro = Math.min(dendometro + Math.random(), 100);
+  ph = Math.min(ph + (Math.random() * 0.01), 6);
+
+  const nuevoDato = {
+    maceta_id: 2,
+    timestamp: new Date().toISOString(),
+    temperatura: temperatura.toFixed(2),
+    humedad: humedad.toFixed(2),
+    peso: peso.toFixed(2),
+    dendometro: dendometro.toFixed(2),
+    ph: ph.toFixed(2)
+  };
+
+  realTimeData.push(nuevoDato);
+  if (realTimeData.length > 50) realTimeData.shift(); // Mantener sólo los últimos 50 datos
+  insertDatosSensores(nuevoDato); // Insertar datos en la tabla
+  return nuevoDato;
+};
+
 io.on('connection', (socket) => {
   console.log('Nuevo cliente conectado');
 
-  setInterval(() => {
-    // Aumentar los valores de manera controlada
-    temperatura = Math.min(temperatura + Math.random(), 30);  // Aumenta hasta un máximo de 30
-    humedad = Math.min(humedad + Math.random(), 80);          // Aumenta hasta un máximo de 80
-    peso = Math.min(peso + Math.random(), 39);                // Aumenta hasta un máximo de 39
-    dendometro = Math.min(dendometro + Math.random(), 100);   // Aumenta hasta un máximo de 100
-    ph = Math.min(ph + (Math.random() * 0.01), 6);            // Aumenta hasta un máximo de 6.0
-
-    const nuevoDato = {
-      maceta_id: 2,
-      timestamp: new Date().toISOString(),
-      temperatura: temperatura.toFixed(2),
-      humedad: humedad.toFixed(2),
-      peso: peso.toFixed(2),
-      dendometro: dendometro.toFixed(2),
-      ph: ph.toFixed(2)
-    };
-
-    insertDatosSensores(nuevoDato); // Insertar datos en la tabla
-
-    socket.emit('nuevo-dato', nuevoDato);
+  let currentIndex = 0;
+  const interval = setInterval(() => {
+    if (currentIndex >= realTimeData.length) {
+      currentIndex = 0; // Reiniciar al principio
+    }
+    socket.emit('nuevo-dato', realTimeData[currentIndex]);
+    currentIndex++;
   }, 2000);
 
   socket.on('disconnect', () => {
+    clearInterval(interval);
     console.log('Cliente desconectado');
   });
 });
@@ -181,4 +192,7 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
   insertInitialData(); // Insertar datos de ejemplo al iniciar el servidor
+  for (let i = 0; i < 50; i++) {
+    generateData();
+  }
 });

@@ -23,7 +23,6 @@ const Salud = () => {
   return (
     <div className="container-Salud">
       <h1 className='saludName'>Salud de Maceta</h1>
-      <div className="formulario"><MacetaForm semillas={semillas} /></div>
       <div className="carrusel"><CarruselMacetas /></div>
     </div>
   );
