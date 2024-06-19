@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
@@ -15,7 +15,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
-const db = getFirestore(app);
 const storage = getStorage(app);
 
-export { auth, firestore, db, storage };
+const getToken = () => {
+  return new Promise((resolve, reject) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        user.getIdToken(true).then((token) => {
+          localStorage.setItem('token', token);
+          resolve(token);
+        }).catch((error) => {
+          reject(error);
+        });
+      } else {
+        reject('No user is signed in');
+      }
+    });
+  });
+};
+
+export { auth, firestore, storage, getToken };
