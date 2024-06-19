@@ -4,6 +4,8 @@ const { Pool } = require('pg');
 const multer = require('multer');
 const http = require('http');
 const socketIo = require('socket.io');
+const admin = require('firebase-admin');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -30,14 +32,47 @@ const pool = new Pool({
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+// Inicializar Firebase Admin SDK
+const serviceAccount = require(path.resolve(__dirname, 'serviceAccountKey.json'));
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+// Middleware de autenticación
+const authenticateToken = async (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.sendStatus(401);
+
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    req.user = decodedToken;
+    next();
+  } catch (error) {
+    console.error('Error al verificar el token:', error);
+    res.sendStatus(403);
+  }
+};
+
+// Registro de usuarios (manejado por Firebase)
+app.post('/api/register', (req, res) => {
+  res.sendStatus(501); // No implementado ya que Firebase maneja el registro
+});
+
+// Inicio de sesión de usuarios (manejado por Firebase)
+app.post('/api/login', (req, res) => {
+  res.sendStatus(501); // No implementado ya que Firebase maneja el inicio de sesión
+});
+
 // Insertar datos de ejemplo al iniciar el servidor
 const insertInitialData = async () => {
   try {
     await pool.query(`
-      INSERT INTO macetas (id, nombre, semilla_id, imagen)
+      INSERT INTO macetas (id, nombre, usuario_uid, semilla_id, imagen)
       VALUES 
-      (2, 'unos', 8, NULL),
-      (3, 'dos', 3, NULL)
+      (2, 'unos', 'some-uid-1', 8, NULL),
+      (3, 'dos', 'some-uid-2', 3, NULL)
       ON CONFLICT (id) DO NOTHING;
     `);
 
@@ -62,23 +97,15 @@ const insertInitialData = async () => {
   }
 };
 
-app.get('/api/semillas', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM semillas');
-    res.json(result.rows);
-  } catch (err) {
-    console.error('Error al obtener las semillas:', err);
-    res.status(500).json({ error: 'Error al obtener las semillas' });
-  }
-});
-
-app.get('/api/macetas', async (req, res) => {
+// Ruta para obtener macetas del usuario autenticado
+app.get('/api/macetas', authenticateToken, async (req, res) => {
   try {
     const result = await pool.query(`
       SELECT macetas.id, macetas.nombre, macetas.semilla_id, macetas.imagen, semillas.nombre AS nombre_semilla
       FROM macetas
       JOIN semillas ON macetas.semilla_id = semillas.id
-    `);
+      WHERE macetas.usuario_uid = $1
+    `, [req.user.uid]); // Usamos req.user.uid para obtener el ID del usuario de Firebase
     res.json(result.rows);
   } catch (err) {
     console.error('Error al obtener las macetas:', err);
@@ -86,14 +113,13 @@ app.get('/api/macetas', async (req, res) => {
   }
 });
 
-app.post('/api/macetas', upload.single('imagen'), async (req, res) => {
+app.post('/api/macetas', upload.single('imagen'), authenticateToken, async (req, res) => {
   const { nombre, semilla_id } = req.body;
   const imagen = req.file ? req.file.buffer : null;
-
   try {
     const result = await pool.query(
-      'INSERT INTO macetas (nombre, semilla_id, imagen) VALUES ($1, $2, $3) RETURNING *',
-      [nombre, semilla_id, imagen]
+      'INSERT INTO macetas (nombre, usuario_uid, semilla_id, imagen) VALUES ($1, $2, $3, $4) RETURNING *',
+      [nombre, req.user.uid, semilla_id, imagen]
     );
     res.json(result.rows[0]);
   } catch (err) {
@@ -102,11 +128,10 @@ app.post('/api/macetas', upload.single('imagen'), async (req, res) => {
   }
 });
 
-app.put('/api/macetas/:id', upload.single('imagen'), async (req, res) => {
+app.put('/api/macetas/:id', upload.single('imagen'), authenticateToken, async (req, res) => {
   const { id } = req.params;
   const { nombre, semilla_id } = req.body;
   const imagen = req.file ? req.file.buffer : null;
-
   try {
     const result = await pool.query(
       'UPDATE macetas SET nombre = $1, semilla_id = $2, imagen = $3 WHERE id = $4 RETURNING *',
@@ -119,18 +144,18 @@ app.put('/api/macetas/:id', upload.single('imagen'), async (req, res) => {
   }
 });
 
-const insertDatosSensores = async (datos) => {
+app.get('/api/semillas', async (req, res) => {
   try {
-    await pool.query(
-      'INSERT INTO datos_sensores (maceta_id, temperatura, humedad, peso, dendometro, ph) VALUES ($1, $2, $3, $4, $5, $6)',
-      [datos.maceta_id, datos.temperatura, datos.humedad, datos.peso, datos.dendometro, datos.ph]
-    );
+    const result = await pool.query('SELECT * FROM semillas');
+    res.json(result.rows);
   } catch (err) {
-    console.error('Error al insertar los datos en la tabla datos_sensores:', err);
+    console.error('Error al obtener las semillas:', err);
+    res.status(500).json({ error: 'Error al obtener las semillas' });
   }
-};
+});
 
-app.get('/api/datos-graficos', async (req, res) => {
+// Ruta para obtener los datos de gráficos
+app.get('/api/datos-graficos', authenticateToken, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM datos_sensores ORDER BY timestamp ASC');
     res.json(result.rows);
@@ -140,59 +165,7 @@ app.get('/api/datos-graficos', async (req, res) => {
   }
 });
 
-// Inicializar los valores
-let temperatura = 15;
-let humedad = 40;
-let peso = 4;
-let dendometro = 0;
-let ph = 5.6;
-
-let realTimeData = [];
-const generateData = () => {
-  temperatura = Math.min(temperatura + Math.random(), 30);
-  humedad = Math.min(humedad + Math.random(), 80);
-  peso = Math.min(peso + Math.random(), 39);
-  dendometro = Math.min(dendometro + Math.random(), 100);
-  ph = Math.min(ph + (Math.random() * 0.01), 6);
-
-  const nuevoDato = {
-    maceta_id: 2,
-    timestamp: new Date().toISOString(),
-    temperatura: temperatura.toFixed(2),
-    humedad: humedad.toFixed(2),
-    peso: peso.toFixed(2),
-    dendometro: dendometro.toFixed(2),
-    ph: ph.toFixed(2)
-  };
-
-  realTimeData.push(nuevoDato);
-  if (realTimeData.length > 50) realTimeData.shift(); // Mantener sólo los últimos 50 datos
-  insertDatosSensores(nuevoDato); // Insertar datos en la tabla
-  return nuevoDato;
-};
-
-io.on('connection', (socket) => {
-  console.log('Nuevo cliente conectado');
-
-  let currentIndex = 0;
-  const interval = setInterval(() => {
-    if (currentIndex >= realTimeData.length) {
-      currentIndex = 0; // Reiniciar al principio
-    }
-    socket.emit('nuevo-dato', realTimeData[currentIndex]);
-    currentIndex++;
-  }, 2000);
-
-  socket.on('disconnect', () => {
-    clearInterval(interval);
-    console.log('Cliente desconectado');
-  });
-});
-
 server.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
-  insertInitialData(); // Insertar datos de ejemplo al iniciar el servidor
-  for (let i = 0; i < 50; i++) {
-    generateData();
-  }
+  insertInitialData();
 });

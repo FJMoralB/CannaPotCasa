@@ -1,25 +1,18 @@
-// NavBar.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faUser } from '@fortawesome/free-solid-svg-icons';
 import './NavBar.css';
 import logo from '../assets/image.png';
 import menuLogo from '../assets/image.png'; // Importa la imagen del botón del menú
-import { auth } from './firebaseConfig'; // Importa el objeto de autenticación de Firebase
+import { getAuth } from 'firebase/auth';
+import { useAuth } from './AuthContext'; // Importa el hook de autenticación desde tu contexto
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para rastrear si el usuario está autenticado
-
-  // Agrega un efecto de efecto secundario para verificar si el usuario está autenticado
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setIsLoggedIn(!!user); // Actualiza el estado de isLoggedIn basado en si hay un usuario autenticado o no
-    });
-    return () => unsubscribe();
-  }, []);
+  const { currentUser } = useAuth();
+  const auth = getAuth();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -61,8 +54,13 @@ function NavBar() {
             )}
           </li>
           <li>
-            {isLoggedIn ? (
-              <button className="menu-link" onClick={handleLogout}>Cerrar sesión</button>
+            {currentUser ? (
+              <>
+                <Link className="menu-link" to="/Profile">
+                  <FontAwesomeIcon icon={faUser} />
+                </Link>
+                <button className="menu-link" onClick={handleLogout}>Cerrar sesión</button>
+              </>
             ) : (
               <Link className="menu-link-login" to="/Login">Login</Link>
             )}

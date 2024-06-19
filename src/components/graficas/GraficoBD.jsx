@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { getToken } from '../firebaseConfig'; // Asegúrate de importar correctamente
 
 const GraficoBD = () => {
-  const [data, setData] = useState({
+  const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
       { label: 'Temperatura', data: [], borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' },
@@ -18,7 +19,13 @@ const GraficoBD = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/datos-graficos');
+        const token = await getToken();
+        const response = await axios.get('http://localhost:5000/api/datos-graficos', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
         const fetchedData = response.data;
 
         console.log('Datos recuperados:', fetchedData);
@@ -30,14 +37,14 @@ const GraficoBD = () => {
         const dendometros = fetchedData.map(d => d.dendometro);
         const phs = fetchedData.map(d => d.ph);
 
-        setData({
+        setChartData({
           labels,
           datasets: [
-            { ...data.datasets[0], data: temperaturas },
-            { ...data.datasets[1], data: humedades },
-            { ...data.datasets[2], data: pesos },
-            { ...data.datasets[3], data: dendometros },
-            { ...data.datasets[4], data: phs },
+            { label: 'Temperatura', data: temperaturas, borderColor: 'rgba(75, 192, 192, 1)', backgroundColor: 'rgba(75, 192, 192, 0.2)' },
+            { label: 'Humedad', data: humedades, borderColor: 'rgba(75, 75, 192, 1)', backgroundColor: 'rgba(75, 75, 192, 0.2)' },
+            { label: 'Peso', data: pesos, borderColor: 'rgba(192, 75, 75, 1)', backgroundColor: 'rgba(192, 75, 75, 0.2)' },
+            { label: 'Dendómetro', data: dendometros, borderColor: 'rgba(75, 192, 75, 1)', backgroundColor: 'rgba(75, 192, 75, 0.2)' },
+            { label: 'PH', data: phs, borderColor: 'rgba(192, 192, 75, 1)', backgroundColor: 'rgba(192, 192, 75, 0.2)' },
           ],
         });
       } catch (error) {
@@ -48,7 +55,7 @@ const GraficoBD = () => {
     fetchData();
   }, []);
 
-  return <Line data={data} />;
+  return <Line data={chartData} />;
 };
 
 export default GraficoBD;
