@@ -3,16 +3,28 @@ import axios from 'axios';
 import MacetaForm from './MacetaForm';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import './CarruselMacetas.css';  // Asegúrate de importar el archivo CSS
+import './CarruselMacetas.css';
+import { useAuth } from '../AuthContext'; // Asegúrate de importar tu contexto de autenticación
 
 const CarruselMacetas = () => {
+  const { currentUser } = useAuth();
   const [macetas, setMacetas] = useState([]);
   const [editMaceta, setEditMaceta] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
   const fetchMacetas = async () => {
+    if (!currentUser) {
+      console.error('Usuario no autenticado');
+      return;
+    }
+
     try {
-      const response = await axios.get('http://localhost:5000/api/macetas');
+      const token = await currentUser.getIdToken();
+      const response = await axios.get('http://localhost:5000/api/macetas', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setMacetas(response.data);
     } catch (error) {
       console.error('Error al obtener las macetas:', error);
@@ -21,7 +33,7 @@ const CarruselMacetas = () => {
 
   useEffect(() => {
     fetchMacetas();
-  }, []);
+  }, [currentUser]);
 
   const handleEditClick = (maceta) => {
     setEditMaceta(maceta);

@@ -39,7 +39,7 @@ function NavBar() {
           onClick={toggleMenu} 
         />
         <ul className={`menu ${menuOpen ? 'open' : ''}`}>
-          <li><Link className="menu-link" to="/Salud">Salud</Link></li>
+          <li><Link className="menu-link" to="/Salud">Macetas</Link></li>
           <li><Link className="menu-link" to="/Graficas">Graficas</Link></li>
           <li><Link className="menu-link" to="/Notificaciones">Notificaciones</Link></li>
           <li>

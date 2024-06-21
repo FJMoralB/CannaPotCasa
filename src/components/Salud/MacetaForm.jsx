@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Salud.css';
+import { useAuth } from '../AuthContext'; // Asegúrate de importar tu contexto de autenticación
 
 const MacetaForm = ({ maceta, onSave }) => {
+  const { currentUser } = useAuth();
   const [nombre, setNombre] = useState(maceta ? maceta.nombre : '');
   const [semillaId, setSemillaId] = useState(maceta ? maceta.semilla_id : '');
   const [imagen, setImagen] = useState(null);
@@ -13,7 +15,12 @@ const MacetaForm = ({ maceta, onSave }) => {
   useEffect(() => {
     const fetchSemillas = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/semillas');
+        const token = await currentUser.getIdToken();
+        const response = await axios.get('http://localhost:5000/api/semillas', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         setSemillas(response.data);
       } catch (error) {
         setError('Error al obtener las semillas');
@@ -22,7 +29,7 @@ const MacetaForm = ({ maceta, onSave }) => {
     };
 
     fetchSemillas();
-  }, []);
+  }, [currentUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,10 +49,12 @@ const MacetaForm = ({ maceta, onSave }) => {
     try {
       setError('');
       setSuccess('');
+      const token = await currentUser.getIdToken();
       if (maceta) {
         await axios.put(`http://localhost:5000/api/macetas/${maceta.id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`
           },
         });
         setSuccess('Maceta actualizada exitosamente');
@@ -53,6 +62,7 @@ const MacetaForm = ({ maceta, onSave }) => {
         await axios.post('http://localhost:5000/api/macetas', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`
           },
         });
         setSuccess('Maceta guardada exitosamente');

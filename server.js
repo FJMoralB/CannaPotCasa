@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: 'http://localhost:5173', // Ajusta esto si tu frontend está en un puerto diferente
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST']
   }
 });
@@ -105,7 +105,7 @@ app.get('/api/macetas', authenticateToken, async (req, res) => {
       FROM macetas
       JOIN semillas ON macetas.semilla_id = semillas.id
       WHERE macetas.usuario_uid = $1
-    `, [req.user.uid]); // Usamos req.user.uid para obtener el ID del usuario de Firebase
+    `, [req.user.uid]);
     res.json(result.rows);
   } catch (err) {
     console.error('Error al obtener las macetas:', err);
@@ -144,7 +144,7 @@ app.put('/api/macetas/:id', upload.single('imagen'), authenticateToken, async (r
   }
 });
 
-app.get('/api/semillas', async (req, res) => {
+app.get('/api/semillas', authenticateToken, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM semillas');
     res.json(result.rows);
